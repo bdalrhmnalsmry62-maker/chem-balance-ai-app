@@ -1,1 +1,147 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>وازنها | الرئيسية</title><link rel="stylesheet" href="/style.css"></head><body><nav><a class="logo" href="/">وازنها</a><div><a class="active" href="/">المقدمة</a><a href="/compounds.html">المركبات</a><a href="/balancer.html">الموازنة</a><a href="/assistant.html">المساعد الذكي</a></div></nav><header class="hero"><div class="badge">مختبر الكيمياء الرقمي</div><h1>مرحبًا بك في وازنها</h1><p>قسم الكيمياء تحت رعاية الدكتورة نجوى حسين</p><label>اختر الكلية<select id="college"><option>كلية علوم الأقصر</option><option>كلية علوم قنا</option><option>كلية علوم أسوان</option></select></label></header><main><section class="card welcome"><h2>ابدأ رحلتك الكيميائية</h2><p>اختر الصفحة المناسبة للتعرف على المركبات، موازنة المعادلات، أو التحدث مع المساعد الذكي.</p><div class="cards"><a href="/compounds.html"><b>قاعدة المركبات</b><span>ابحث بالعربي والإنجليزي والصيغة.</span></a><a href="/balancer.html"><b>وازن معادلة</b><span>احصل على النتيجة والشرح.</span></a><a href="/assistant.html"><b>اسأل المساعد</b><span>تحدث واسأل عن الكيمياء.</span></a></div></section></main><footer>مشروع تعليمي لقسم الكيمياء</footer></body></html>
+const express = require('express');
+const path = require('path');
+const { readFileSync } = require('fs');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+const compounds = JSON.parse(readFileSync(path.join(__dirname, 'data', 'compounds.json'), 'utf8')).compounds;
+
+function parseFormula(formula) {
+  const map = {};
+  const regex = /([A-Z][a-z]?)(\d*)/g;
+  let match;
+  while ((match = regex.exec(formula))) {
+    const element = match[1];
+    const count = Number.parseInt(match[2] || '1', 10);
+    map[element] = (map[element] || 0) + count;
+  }
+  return map;
+}
+
+function gcd(a, b) {
+  let x = Math.abs(a);
+  let y = Math.abs(b);
+  while (y) {
+    const t = x % y;
+    x = y;
+    y = t;
+  }
+  return x;
+}
+
+function normalizeSolution(nums) {
+  let divisor = nums[0];
+  for (let i = 1; i < nums.length; i++) divisor = gcd(divisor, nums[i]);
+  return nums.map((n) => n / divisor);
+}
+
+function solveEquation(rawEquation) {
+  const normalized = rawEquation.replace(/→/g, '->');
+  const sides = normalized.split(/\s*->\s*/);
+  if (sides.length !== 2) throw new Error('استخدم السهم -> بين الطرفين.');
+
+  const left = sides[0].split('+').map((x) => x.trim()).filter(Boolean);
+  const right = sides[1].split('+').map((x) => x.trim()).filter(Boolean);
+  if (!left.length || !right.length) throw new Error('أدخل مركبات في الطرفين.');
+
+  const molecules = [...left, ...right];
+  const uniqueElements = Array.from(new Set(molecules.flatMap((m) => Object.keys(parseFormula(m)))));
+
+  const search = (index, coeffs) => {
+    if (index === molecules.length) {
+      const totals = {};
+      for (const element of uniqueElements) totals[element] = 0;
+
+      left.forEach((molecule, i) => {
+        const formula = parseFormula(molecule);
+        for (const element of uniqueElements) {
+          totals[element] += (formula[element] || 0) * coeffs[i];
+        }
+      });
+
+      right.forEach((molecule, i) => {
+        const formula = parseFormula(molecule);
+        for (const element of uniqueElements) {
+          totals[element] -= (formula[element] || 0) * coeffs[left.length + i];
+        }
+      });
+
+      if (Object.values(totals).every((v) => v === 0)) return coeffs;
+      return null;
+    };
+
+    for (let value = 1; value <= 12; value += 1) {
+      coeffs[index] = value;
+      const result = search(index + 1, coeffs);
+      if (result) return result;
+    }
+    return null;
+  };
+
+  const coeffs = new Array(molecules.length).fill(1);
+  const solution = search(0, coeffs);
+  if (!solution) throw new Error('تعذر حساب المعاملات لهذا التفاعل في هذه النسخة، حاول معادلة أبسط.');
+
+  const normalizedSolution = normalizeSolution(solution);
+  const leftCoeffs = normalizedSolution.slice(0, left.length);
+  const rightCoeffs = normalizedSolution.slice(left.length);
+
+  return {
+    left,
+    right,
+    leftCoeffs,
+    rightCoeffs,
+    balanced: [...left.map((m, i) => `${leftCoeffs[i] === 1 ? '' : leftCoeffs[i]}${m}`), '->', ...right.map((m, i) => `${rightCoeffs[i] === 1 ? '' : rightCoeffs[i]}${m}`)].join(' '),
+    raw: rawEquation,
+    message: 'تم التحليل والبحث عن معاملات متوازنة.'
+  };
+}
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/api/compounds', (_, res) => {
+  res.json({ compounds });
+});
+
+app.post('/api/balance', (req, res) => {
+  try {
+    const equation = String(req.body.equation || '').trim();
+    if (!equation) return res.status(400).json({ error: 'أدخل المعادلة أولاً.' });
+    const result = solveEquation(equation);
+    res.json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message || 'حدث خطأ أثناء الموازنة.' });
+  }
+});
+
+app.post('/api/ai-chat', (req, res) => {
+  const message = String(req.body.message || '').trim();
+  if (!message) return res.status(400).json({ error: 'اكتب السؤال أولاً.' });
+
+  const text = message.toLowerCase();
+  let answer = 'أستطيع مساعدتك في موازنة المعادلات، شرح المركبات، والطرق الكيميائية المختلفة.';
+
+  if (text.includes('مواز') || text.includes('balance') || text.includes('معادلة')) {
+    answer = 'اكتب المعادلة في صفحة الموازنة بصيغة إنجليزية مثل: H2 + O2 -> H2O أو CH4 + O2 -> CO2 + H2O، ثم اضغط زر «وازن المعادلة». الحركية تعتمد على الحفاظ على عدد الذرات في الطرفين.';
+  } else if (text.includes('استخلاص') || text.includes('تقطير') || text.includes('ترشيح') || text.includes('تبلور')) {
+    answer = 'طرق استخلاص المركبات تشمل: الترشيح لفصل المواد غير الذائبة، والتقطير لفصل السوائل ذات درجات الغليان المختلفة، والتبلور لتنقية المواد الصلبة، والاستخلاص بالمذيب حسب الذوبانية.';
+  } else if (text.includes('كلية') || text.includes('قنا') || text.includes('أسوان') || text.includes('الأقصر')) {
+    answer = 'الموقع يدعم اختيار كلية علوم الأقصر، كلية علوم قنا، وكلية علوم أسوان. يمكنك اختيار الكلية من الصفحة الرئيسية.';
+  } else if (text.includes('نجوى') || text.includes('دكتورة')) {
+    answer = 'قسم الكيمياء في الموقع مخصص لدراسة وتطبيقات الكيمياء وتحت رعاية الدكتورة نجوى حسين، مع اختيار الكلية المناسبة.';
+  } else if (text.includes('هيدروجين') || text.includes('أكسجين') || text.includes('ماء') || text.includes('water')) {
+    answer = 'الماء يتكون من الهيدروجين والأكسجين: 2H2 + O2 -> 2H2O، وهذا مثال واضح جدًا على موازنة المعادلة.';
+  }
+
+  res.json({ answer });
+});
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`Chem Balance AI website running at http://localhost:${PORT}`);
+});

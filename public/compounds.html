@@ -1,1 +1,95 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>المركبات | وازنها</title><link rel="stylesheet" href="/style.css"></head><body><nav><a class="logo" href="/">وازنها</a><div><a href="/">المقدمة</a><a class="active" href="/compounds.html">المركبات</a><a href="/balancer.html">الموازنة</a><a href="/assistant.html">المساعد الذكي</a></div></nav><main class="page"><section class="card"><h1>قاعدة المركبات</h1><p class="muted">ابحث باسم المركب بالعربي أو English أو اكتب الصيغة.</p><input id="compoundSearch" placeholder="مثال: الماء أو Water أو H2O"><div id="compounds" class="compound-list"></div></section></main><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>وازنها | قسم الكيمياء</title>
+    <meta name="description" content="موقع عربي لموازنة المعادلات الكيميائية مع قاعدة مركبات ومساعد ذكي." />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav class="topbar">
+      <div class="container nav-inner">
+        <a class="brand" href="/">وازنها</a>
+        <div class="nav-links">
+          <a class="active" href="/">الرئيسية</a>
+          <a href="/compounds.html">المركبات</a>
+          <a href="/balancer.html">الموازنة</a>
+          <a href="/assistant.html">المساعد الذكي</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container hero-content">
+        <span class="mini-badge">مختبر الكيمياء الرقمي</span>
+        <h1>مرحبًا بك في وازنها</h1>
+        <p class="subtitle">قسم الكيمياء تحت رعاية الدكتورة نجوى حسين</p>
+
+        <div class="college-box">
+          <label for="collegeSelect">اختر الكلية</label>
+          <select id="collegeSelect">
+            <option value="الأقصر">كلية علوم الأقصر</option>
+            <option value="قنا">كلية علوم قنا</option>
+            <option value="أسوان">كلية علوم أسوان</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main class="container main-content">
+      <section class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon">🧪</div>
+          <h3>قاعدة المركبات</h3>
+          <p>ابحث عن أسماء المركبات بالعربي والإنجليزي أو بالصيغ الكيميائية.</p>
+          <a href="/compounds.html" class="text-link">اذهب إلى المركبات</a>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">⚖️</div>
+          <h3>موازنة المعادلات</h3>
+          <p>اكتب المعادلة واصل إلى الحل الصحيح مع شرح مبسط للخطوات.</p>
+          <a href="/balancer.html" class="text-link">ابدأ الموازنة</a>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <h3>المساعد الذكي</h3>
+          <p>تحدث مع المساعد للحصول على شرح أو توضيح حول المعادلات والطرق.</p>
+          <a href="/assistant.html" class="text-link">ابدأ المحادثة</a>
+        </article>
+      </section>
+
+      <section class="info-panel">
+        <div>
+          <h2>لماذا هذا الموقع؟</h2>
+          <p>
+            يساعد الطلاب والباحثين على فهم موازنة المعادلات الكيميائية بسهولة، مع توضيح
+            الطرق المختلفة مثل الجبرية، الأكسدة والاختزال، وأنصاف التفاعلات.
+          </p>
+        </div>
+        <div class="stats">
+          <div>
+            <strong>19</strong>
+            <span>مركب جاهز</span>
+          </div>
+          <div>
+            <strong>3</strong>
+            <span>طرق موازنة</span>
+          </div>
+          <div>
+            <strong>∞</strong>
+            <span>أسئلة قابلة للفهم</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">مشروع تعليمي لقسم الكيمياء • باستخدام HTML • CSS • JavaScript • Node.js</div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

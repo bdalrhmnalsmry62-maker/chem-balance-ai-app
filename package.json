@@ -1,9 +1,27 @@
 {
-  "name": "chem-balance-ai-app",
-  "version": "1.0.0",
-  "description": "Arabic chemical equation balancer with optional AI assistant",
-  "main": "server.js",
-  "scripts": { "start": "node server.js", "dev": "node --watch server.js" },
-  "engines": { "node": ">=18" },
-  "dependencies": { "express": "^4.21.2" }
+  "compounds": [
+    {"formula":"H2","ar":"الهيدروجين","en":"Hydrogen"},
+    {"formula":"O2","ar":"الأكسجين","en":"Oxygen"},
+    {"formula":"N2","ar":"النيتروجين","en":"Nitrogen"},
+    {"formula":"H2O","ar":"الماء","en":"Water"},
+    {"formula":"CO2","ar":"ثاني أكسيد الكربون","en":"Carbon dioxide"},
+    {"formula":"CO","ar":"أول أكسيد الكربون","en":"Carbon monoxide"},
+    {"formula":"CH4","ar":"الميثان","en":"Methane"},
+    {"formula":"NH3","ar":"الأمونيا","en":"Ammonia"},
+    {"formula":"NaCl","ar":"كلوريد الصوديوم","en":"Sodium chloride"},
+    {"formula":"HCl","ar":"حمض الهيدروكلوريك","en":"Hydrochloric acid"},
+    {"formula":"NaOH","ar":"هيدروكسيد الصوديوم","en":"Sodium hydroxide"},
+    {"formula":"H2SO4","ar":"حمض الكبريتيك","en":"Sulfuric acid"},
+    {"formula":"CaCO3","ar":"كربونات الكالسيوم","en":"Calcium carbonate"},
+    {"formula":"CaO","ar":"أكسيد الكالسيوم","en":"Calcium oxide"},
+    {"formula":"Fe2O3","ar":"أكسيد الحديد الثلاثي","en":"Iron(III) oxide"},
+    {"formula":"Fe","ar":"الحديد","en":"Iron"},
+    {"formula":"Al","ar":"الألومنيوم","en":"Aluminium"},
+    {"formula":"Al2O3","ar":"أكسيد الألومنيوم","en":"Aluminium oxide"},
+    {"formula":"KClO3","ar":"كلورات البوتاسيوم","en":"Potassium chlorate"},
+    {"formula":"KCl","ar":"كلوريد البوتاسيوم","en":"Potassium chloride"},
+    {"formula":"C6H12O6","ar":"الجلوكوز","en":"Glucose"},
+    {"formula":"C2H5OH","ar":"الإيثانول","en":"Ethanol"},
+    {"formula":"HNO3","ar":"حمض النيتريك","en":"Nitric acid"}
+  ]
 }

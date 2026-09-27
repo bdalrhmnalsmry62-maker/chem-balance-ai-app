@@ -1,1 +1,63 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>المساعد الذكي | وازنها</title><link rel="stylesheet" href="/style.css"></head><body><nav><a class="logo" href="/">وازنها</a><div><a href="/">المقدمة</a><a href="/compounds.html">المركبات</a><a href="/balancer.html">الموازنة</a><a class="active" href="/assistant.html">المساعد الذكي</a></div></nav><main class="page"><section class="card assistant"><h1>تحدث مع المساعد الذكي</h1><p class="muted">اكتب سؤالك عن المعادلات أو المركبات أو طرق الاستخلاص.</p><div id="chat" class="chat"><div class="bot">مرحبًا! كيف أساعدك في الكيمياء؟</div></div><div class="chat-input"><input id="question" placeholder="اكتب سؤالك هنا..."><button id="askBtn">إرسال</button></div></section></main><script src="/app.js"></script></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الموازنة | وازنها</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav class="topbar">
+      <div class="container nav-inner">
+        <a class="brand" href="/">وازنها</a>
+        <div class="nav-links">
+          <a href="/">الرئيسية</a>
+          <a href="/compounds.html">المركبات</a>
+          <a class="active" href="/balancer.html">الموازنة</a>
+          <a href="/assistant.html">المساعد الذكي</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container page-content two-column">
+      <section class="card">
+        <h1>موازنة المعادلات</h1>
+        <p class="section-text">اكتب الصيغ بالإنجليزية، وافصل المركبات بعلامة +، ثم استخدم السهم ->.</p>
+
+        <div class="calculator-box">
+          <input id="equationInput" dir="ltr" type="text" value="H2 + O2 -> H2O" placeholder="H2 + O2 -> H2O" />
+          <div class="action-row">
+            <button id="balanceBtn" class="primary-btn">وازن المعادلة</button>
+            <button id="exampleBtn" class="secondary-btn">مثال سريع</button>
+          </div>
+        </div>
+
+        <div id="balanceError" class="status-box error hidden"></div>
+        <div id="balanceResult" class="status-box success hidden">
+          <h3>المعادلة المتوازنة</h3>
+          <div id="balancedEquation" class="final-equation" dir="ltr"></div>
+          <div id="balanceExplanation" class="explanation"></div>
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>طرق الموازنة</h2>
+        <ul class="method-list">
+          <li><strong>الطريقة الجبرية:</strong> تعيين معاملات مجهولة وحفظ الذرات.</li>
+          <li><strong>الأكسدة والاختزال:</strong> مناسبة للمعادلات التي تتغير فيها أعداد التأكسد.</li>
+          <li><strong>أنصاف التفاعلات:</strong> تفيد في الوسط الحمضي أو القاعدي.</li>
+        </ul>
+
+        <h3>طرق استخلاص المركبات</h3>
+        <ul class="method-list small">
+          <li>الترشيح لفصل المادة الصلبة عن السائل</li>
+          <li>التقطير لفصل السوائل حسب درجة الغليان</li>
+          <li>التبلور لتنقية المواد الصلبة</li>
+          <li>الاستخلاص بالمذيب حسب الذوبانية</li>
+        </ul>
+      </aside>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

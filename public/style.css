@@ -1,1 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');:root{--navy:#102a43;--blue:#1677c8;--cyan:#19b5c5;--bg:#f3f8fc;--ink:#17324d}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Arial,sans-serif}nav{height:70px;background:#fff;box-shadow:0 2px 12px #17324d18;display:flex;align-items:center;justify-content:space-between;padding:0 max(20px,calc((100% - 1050px)/2));gap:20px}nav a{color:var(--ink);text-decoration:none;margin:0 6px;padding:8px 10px;border-radius:8px}nav a:hover,nav a.active{color:var(--blue);background:#edf7fc}.logo{font-weight:800!important;font-size:1.35rem;color:var(--blue)!important}.hero{padding:65px 20px 95px;text-align:center;color:#fff;background:linear-gradient(135deg,#102a43,#1677c8 62%,#19b5c5)}.badge{display:inline-block;border:1px solid #ffffff55;border-radius:30px;padding:6px 18px}.hero h1{font-size:clamp(2rem,5vw,3.5rem);margin:20px 0 5px}.hero p{font-size:1.15rem}.hero label{display:block;max-width:360px;margin:25px auto 0;text-align:right}.hero select{display:block;width:100%;margin-top:6px;padding:13px;border:0;border-radius:10px;font:inherit}.page,main{max-width:1050px;margin:35px auto 50px;padding:0 16px}.card{background:#fff;border-radius:18px;padding:26px;margin:20px 0;box-shadow:0 8px 30px #17324d12}.card h1,.card h2{color:var(--navy)}.muted,.card p{color:#60758b}.card input{width:100%;padding:14px;border:1px solid #cbd9e5;border-radius:10px;font:inherit}.actions{display:flex;gap:10px;margin-top:13px}button{cursor:pointer;border:0;border-radius:10px;padding:12px 22px;color:#fff;background:var(--blue);font:inherit;font-weight:bold}.secondary{color:var(--navy);background:#e4edf5}.error{color:#bb2d3b;margin-top:10px}.answer{margin-top:20px;padding:18px;border-radius:12px;background:#e8f7f5;color:#075b50;font-size:1.35rem;font-weight:bold;text-align:center;direction:ltr}.grid,.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:20px}.grid article,.cards a{background:#f7fafc;border-radius:12px;padding:16px}.cards a{color:var(--ink);text-decoration:none}.cards span{display:block;color:#60758b;margin-top:8px}.compound-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-top:15px}.compound{padding:12px;border:1px solid #d7e3ec;border-radius:10px;cursor:pointer}.compound:hover{border-color:var(--cyan);background:#f0fcfd}.formula{direction:ltr;font-weight:bold;color:var(--blue)}.methods{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.methods div{padding:15px;background:#eef7fb;border-radius:12px}.methods span{display:block;font-size:.9rem;margin-top:7px;color:#60758b}.chat{height:350px;overflow:auto;background:#f7fafc;border-radius:12px;padding:15px;margin:15px 0}.bot,.user{max-width:80%;padding:11px 15px;border-radius:14px;margin:8px 0;white-space:pre-wrap}.bot{background:#e5f4fa}.user{background:#1677c8;color:white;margin-right:auto}.chat-input{display:flex;gap:8px}.chat-input input{flex:1}footer{text-align:center;padding:25px;color:#60758b}@media(max-width:700px){nav{height:auto;align-items:flex-start;padding:12px;flex-direction:column}nav div{display:flex;flex-wrap:wrap}.grid,.cards,.methods{grid-template-columns:1fr 1fr}}@media(max-width:450px){.grid,.cards,.methods{grid-template-columns:1fr}.actions,.chat-input{flex-direction:column}}
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>المساعد الذكي | وازنها</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <nav class="topbar">
+      <div class="container nav-inner">
+        <a class="brand" href="/">وازنها</a>
+        <div class="nav-links">
+          <a href="/">الرئيسية</a>
+          <a href="/compounds.html">المركبات</a>
+          <a href="/balancer.html">الموازنة</a>
+          <a class="active" href="/assistant.html">المساعد الذكي</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container page-content">
+      <section class="card assistant-box">
+        <h1>تحدث مع المساعد الذكي</h1>
+        <p class="section-text">اسأل عن المقادير الكيميائية، الموازنة، أو طرق استخلاص المركبات.</p>
+
+        <div id="chatBox" class="chat-box">
+          <div class="message bot">مرحبًا! أستطيع مساعدتك في موازنة المعادلات الكيميائية وشرح المركبات.</div>
+        </div>
+
+        <div class="chat-input-row">
+          <input id="chatInput" type="text" placeholder="اكتب سؤالك مثل: كيف أوازن CH4 + O2؟" />
+          <button id="sendChatBtn" class="primary-btn">إرسال</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
